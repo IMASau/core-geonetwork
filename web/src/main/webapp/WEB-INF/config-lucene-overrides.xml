@@ -1,0 +1,13 @@
+<overrides>
+	<file name=".*WEB-INF/config-lucene\.xml">
+	    <addXML xpath="search/dumpFields">
+	        <field name="orgName" tagName="organisation"/>
+	        <field name="platform" tagName="platform"/>
+	        <field name="longParamName" tagName="parameter"/>
+	        <field name="tempExtentBegin" tagName="tempExtentBegin"/>
+	        <field name="tempExtentEnd" tagName="tempExtentEnd"/>
+	        <field name="geoPolygon" tagName="geoPolygon"/>
+	    </addXML>
+	</file>
+</overrides>
+

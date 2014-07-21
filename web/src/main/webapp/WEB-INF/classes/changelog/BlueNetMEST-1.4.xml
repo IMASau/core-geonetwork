@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<!-- ============================================================ -->
+<!-- This change log adds changes introduced in the BlueNetMEST 1.3 if they aren't present                         -->    
+<!-- ============================================================ -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+    
+    <!-- settings changes in 1.4 unstable -->
+    
+    <changeSet author="craigj" id="settings-changes-1.4-unstable">
+        <preConditions >
+            <sqlCheck expectedResult="0">select count(*) from settings where name='at' and value parentid=(select id from settings where parentid=1 and name='indexoptimizer'</sqlCheck>
+        </preConditions>
+        <sql>
+            delete from settings where name='interval' and parentid=(select id from settings where parentid=1 and name='indexoptimizer')
+            insert into settings (id, parentid, name, value) select max(id)+1,(select id from settings where parentid=1 and name='indexoptimizer'), 'enable', 'true' from settings; 
+            insert into settings (id, parentid, name, value) select max(id)+1,(select id from settings where parentid=1 and name='indexoptimizer'), 'at', null from settings; 
+            insert into settings (id, parentid, name, value) select max(id)+1,max(id), 'hour', '0' from settings; 
+            insert into settings (id, parentid, name, value) select max(id)+1,max(id)-1, 'min', '0' from settings; 
+            insert into settings (id, parentid, name, value) select max(id)+1,max(id)-2, 'sec', '0' from settings; 
+            insert into settings (id, parentid, name, value) select max(id)+1,(select id from settings where parentid=1 and name='indexoptimizer'), 'interval', null from settings; 
+            insert into settings (id, parentid, name, value) select max(id)+1,max(id), 'day', '0' from settings; 
+            insert into settings (id, parentid, name, value) select max(id)+1,max(id)-1, 'hour', '0' from settings; 
+            insert into settings (id, parentid, name, value) select max(id)+1,max(id)-2, 'min', '0' from settings; 
+        </sql>
+    </changeSet>
+    
+    <!-- regions changes in 1.4 -->
+    
+    <changeSet author="craigj" id="settings-changes-1.4-unstable">
+        <preConditions >
+            <sqlCheck expectedResult="0">select count(*) from regions where id=1010 and west=55</sqlCheck>
+        </preConditions>
+        <update tableName="regions">
+            <column name="west" value="-27.34081"/>
+            <column name="east" value="55"/>
+            <where>where id=1010</where>
+        </update>
+        <update tableName="regions">
+            <column name="east" value="30"/>
+            <where>where id=1016</where>
+        </update>
+    </changeSet>
+    
+    <!-- update version number -->
+    
+    <changeSet author="craigj" id="version">
+        <update tableName="settings">
+            <column name="value" value="1.3"/>
+            <where>id=15 and name='version'</where>
+        </update>
+        <update tableName="settings">
+            <column name="value" value="110310"/>
+            <where>id=16 and name='subVersion'</where>
+        </update>
+    </changeSet>
+    
+    
+</databaseChangeLog>

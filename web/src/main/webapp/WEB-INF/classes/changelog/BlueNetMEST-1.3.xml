@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<!-- ============================================================ -->
+<!-- This change log adds changes introduced in the BlueNetMEST 1.3 if they aren't present                         -->    
+<!-- ============================================================ -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+        
+    <changeSet author="craigj" id="new-settings">
+        <!-- Run change log only if 1.3 settings aren't present -->
+        
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">select count(*) from settings where parentid=1 and name='selectionmanager'</sqlCheck>
+            <sqlCheck expectedResult="0">select count(*) from settings where parentid=1 and name='indexoptimizer'</sqlCheck>
+        </preConditions>
+        
+        <!-- add settings added in 1.3 -->
+        
+        <sql>
+            insert into settings (id, parentid, name, value) select max(id)+1, 1, 'selectionmanager', null from settings; 
+            insert into settings (id, parentid, name, value) select max(id)+1, max(id), 'maxrecords', '1000' from settings; 
+            insert into settings (id, parentid, name, value) select max(id)+1, 1, 'indexoptimizer', null from settings; 
+            insert into settings (id, parentid, name, value) select max(id)+1, max(id), 'interval', '30' from settings; 
+         </sql>
+         
+         <!-- update version number -->
+         
+        <update tableName="settings">
+            <column name="value" value="1.3"/>
+            <where>id=15 and name='version'</where>
+        </update>
+        <update tableName="settings">
+            <column name="value" value="110310"/>
+            <where>id=16 and name='subVersion'</where>
+        </update>
+    </changeSet>
+    
+    
+</databaseChangeLog>

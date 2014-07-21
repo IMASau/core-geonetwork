@@ -1,0 +1,10 @@
+"id","parentid","name","value"
+917,1,"metadataprivs",
+918,917,"usergrouponly","false"
+950,1,"autodetect",
+951,950,"enable","true"
+952,1,"requestedLanguage",
+953,952,"only","false"
+954,952,"sorted","true"
+955,952,"ignored","false"
+

@@ -1,0 +1,10 @@
+<overrides>
+    <!-- add gmd:protocol choices to the strings file -->
+    <file name=".*geonetwork/loc/eng/xml/strings\.xml">
+        <addXML xpath="">
+            <protocolChoice show="y" value="IMOS:AGGREGATION--aodaac">Data for Aggregration with AODAAC</protocolChoice>
+            <protocolChoice show="y" value="IMOS:AGGREGATION--bodaac">Data for Aggregration with BODAAC</protocolChoice>
+            <protocolChoice show="y" value="IMOS:AGGREGATION--gogoduck">Data for Aggregration with GoGoDuck</protocolChoice>
+        </addXML>
+    </file>
+</overrides>

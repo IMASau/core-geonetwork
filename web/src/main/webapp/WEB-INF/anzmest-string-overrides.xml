@@ -1,0 +1,14 @@
+<overrides>
+	<!-- add gmd:protocol choices to the strings file -->
+	<!-- This has been fixed in ANZMEST 2.8.x - remove when we upgrade to the next version -->
+	<file name=".*geonetwork/loc/eng/xml/strings\.xml">
+		<addXML xpath="">
+			<protocolChoice show="y" value="WWW:LINK-1.0-http--metadata-URL">Metadata URL</protocolChoice>
+			<protocolChoice show="y" value="WWW:LINK-1.0-http--downloaddata">Data for download (URL)</protocolChoice>
+			<protocolChoice show="-" value="WWW:DOWNLOAD-1.0-http--downloaddata">Data File for download</protocolChoice>
+			<protocolChoice show="-" value="WWW:DOWNLOAD-1.0-http--downloadother">Other File for download</protocolChoice>
+			<protocolChoice show="-" value="WWW:DOWNLOAD-1.0-ftp--downloaddata">Data File for download through FTP</protocolChoice>
+			<protocolChoice show="-" value="WWW:DOWNLOAD-1.0-ftp--downloadother">Other File for download through FTP</protocolChoice>
+		</addXML>
+	</file>
+</overrides>

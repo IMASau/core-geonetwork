@@ -1,0 +1,23 @@
+<overrides>
+  <file name=".*WEB-INF/config-summary\.xml">
+    <addXML xpath="def/hits">
+      <item name="organisationName" plural="organisationNames"
+        indexKey="orgName" order="freq" type="string" max="100" />
+      <item name="longParamName" plural="longParamNames"
+        indexKey="longParamName" order="freq" type="string" max="100"/>
+      <item name="platformName" plural="platformNames"
+        indexKey="platform" order="freq" type="string" max="100"/>
+    </addXML>
+    <addXML xpath="def">
+      <portal_summary>
+        <item name="organisationName" plural="organisationNames"
+          indexKey="orgName" order="freq" type="string" max="100" />
+        <item name="longParamName" plural="longParamNames"
+          indexKey="longParamName" order="freq" type="string" max="100"/>
+        <item name="platformName" plural="platformNames"
+          indexKey="platform" order="freq" type="string" max="100"/>
+      </portal_summary>
+    </addXML>
+  </file>
+</overrides>
+

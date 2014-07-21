@@ -1,0 +1,1417 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<!-- ============================================================ -->
+<!-- This change log contains database differences between a BlueNetMEST 1.4.8 install and geonetwork 2.7 -->    
+<!-- ============================================================ -->
+
+<databaseChangeLog 
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:gnext="http://geonetwork-opensource.org/liquibase-extensions"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+    
+     <property name="USER_SETTINGS_START" value="10000"/>
+
+    <!-- ========================================================== -->
+    <!-- New tables -->
+    <!-- ========================================================== -->
+    
+    <changeSet author="liquibase" id="cswservercapabilitiesinfo-table">
+        <createTable tableName="cswservercapabilitiesinfo">
+            <column name="idfield" type="int4">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="cswservercapabilitiesinfo_pkey"/>
+            </column>
+            <column name="langid" type="VARCHAR(5)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="field" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="label" type="TEXT"/>
+        </createTable>
+    </changeSet>
+    
+    <!-- ========================================================== -->
+    
+    <changeSet author="liquibase" id="harvesthistory-table">
+        <createTable tableName="harvesthistory">
+            <column name="id" type="int4">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="harvesthistory_pkey"/>
+            </column>
+            <column name="harvestdate" type="VARCHAR(30)"/>
+            <column name="harvesteruuid" type="VARCHAR(250)"/>
+            <column name="harvestername" type="VARCHAR(128)"/>
+            <column name="harvestertype" type="VARCHAR(128)"/>
+            <column defaultValue="n" name="deleted" type="char(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="info" type="TEXT"/>
+            <column name="params" type="TEXT"/>
+        </createTable>
+    </changeSet>
+    
+    <!-- ========================================================== -->
+    
+    <changeSet author="liquibase" id="metadatanotifications-table">
+        <createTable tableName="metadatanotifications">
+            <column name="metadataid" type="int4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="notifierid" type="int4">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="n" name="notified" type="char(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="metadatauuid" type="VARCHAR(250)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="action" type="char(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="errormsg" type="TEXT"/>
+        </createTable>
+    </changeSet>
+    
+    <!-- ========================================================== -->
+    
+    <changeSet author="liquibase" id="metadatanotifiers-table">
+        <createTable tableName="metadatanotifiers">
+            <column name="id" type="int4">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="metadatanotifiers_pkey"/>
+            </column>
+            <column name="name" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="url" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="n" name="enabled" type="char(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR(32)"/>
+            <column name="password" type="VARCHAR(32)"/>
+        </createTable>
+    </changeSet>
+    
+    <!-- ========================================================== -->
+    
+    <changeSet author="liquibase" id="params-table">
+        <createTable tableName="params">
+            <column name="id" type="int4">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="params_pkey"/>
+            </column>
+            <column name="requestid" type="int4"/>
+            <column name="querytype" type="VARCHAR(128)"/>
+            <column name="termfield" type="VARCHAR(128)"/>
+            <column name="termtext" type="VARCHAR(128)"/>
+            <column name="similarity" type="FLOAT8(17)"/>
+            <column name="lowertext" type="VARCHAR(128)"/>
+            <column name="uppertext" type="VARCHAR(128)"/>
+            <column name="inclusive" type="char(1)"/>
+        </createTable>
+    </changeSet>
+    
+    <!-- ========================================================== -->
+    
+    <changeSet author="liquibase" id="requests-table">
+        <createTable tableName="requests">
+            <column name="id" type="int4">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="requests_pkey"/>
+            </column>
+            <column name="requestdate" type="VARCHAR(30)"/>
+            <column name="ip" type="VARCHAR(128)"/>
+            <column name="query" type="VARCHAR(4000)"/>
+            <column name="hits" type="int4"/>
+            <column name="lang" type="VARCHAR(16)"/>
+            <column name="sortby" type="VARCHAR(128)"/>
+            <column name="spatialfilter" type="VARCHAR(4000)"/>
+            <column name="type" type="VARCHAR(4000)"/>
+            <column defaultValueNumeric="1" name="simple" type="int4"/>
+            <column defaultValueNumeric="0" name="autogenerated" type="int4"/>
+            <column name="service" type="VARCHAR(128)"/>
+        </createTable>
+    </changeSet>
+    
+    <!-- ========================================================== -->
+    
+    <changeSet author="liquibase" id="thesaurus-table">
+        <createTable tableName="thesaurus">
+            <column name="id" type="VARCHAR(250)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="thesaurus_pkey"/>
+            </column>
+            <column name="activated" type="VARCHAR(1)"/>
+        </createTable>
+    </changeSet>
+    
+    <!-- ========================================================== -->
+    
+    <changeSet author="liquibase" id="validation-table">
+        <createTable tableName="validation">
+            <column name="metadataid" type="int4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="valtype" type="VARCHAR(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="int4"/>
+            <column name="tested" type="int4"/>
+            <column name="failed" type="int4"/>
+            <column name="valdate" type="VARCHAR(30)"/>
+        </createTable>
+    </changeSet>
+    
+    <!-- ========================================================== -->
+    <!-- Languages new columns and data -->
+    <!-- ========================================================== -->
+    
+    <changeSet author="liquibase" id="languages-table-data">
+        <addColumn tableName="languages">
+            <column name="isocode" type="VARCHAR(3)"/>
+        </addColumn>
+        <addColumn tableName="languages">
+            <column defaultValue="n" name="isinspire" type="char(1)"/>
+        </addColumn>
+        <addColumn tableName="languages">
+            <column defaultValue="n" name="isdefault" type="char(1)"/>
+        </addColumn>
+        <loadData tableName="languages" file="data/languages.csv"/>
+        <update tableName="languages">
+            <column name="isocode" value="chi"/>
+            <column name="isinspire" value="n"/>
+            <column name="isdefault" value="n"/>
+            <where>id='cn'</where>
+        </update>
+        <update tableName="languages">
+            <column name="isocode" value="eng"/>
+            <column name="isinspire" value="y"/>
+            <column name="isdefault" value="y"/>
+            <where>id='en'</where>
+        </update>
+        <update tableName="languages">
+            <column name="isocode" value="spa"/>
+            <column name="isinspire" value="y"/>
+            <column name="isdefault" value="n"/>
+            <where>id='es'</where>
+        </update>
+        <update tableName="languages">
+            <column name="isocode" value="fre"/>
+            <column name="isinspire" value="y"/>
+            <column name="isdefault" value="n"/>
+            <where>id='fr'</where>
+        </update>
+        <addNotNullConstraint tableName="languages" columnName="isocode"/>
+    </changeSet>
+    
+    <!-- ========================================================== -->
+    <!-- Column changes -->
+    <!-- ========================================================== -->
+    
+    <changeSet author="liquibase" id="metadata-new-columns">
+        <addColumn tableName="metadata">
+            <column name="displayorder" type="int4"/>
+        </addColumn>
+        <addColumn tableName="metadata">
+            <column name="doctype" type="VARCHAR(255)"/>
+        </addColumn>
+    </changeSet>
+    
+    <!-- ========================================================== -->
+    
+    <changeSet author="liquibase" id="users-new-columns">
+        <addColumn tableName="users">
+            <column name="city" type="VARCHAR(128)"/>
+        </addColumn>
+    </changeSet>
+    
+    <!-- ========================================================== -->
+    
+    <changeSet author="liquibase" id="categories-modified-columns">
+        <modifyDataType columnName="name" newDataType="VARCHAR(255)" tableName="categories"/>
+    </changeSet>
+    
+    <!-- ========================================================== -->
+    
+    <changeSet author="liquibase" id="categoriesdes-modifiedcolumns">
+        <modifyDataType columnName="label" newDataType="VARCHAR(255)" tableName="categoriesdes"/>
+    </changeSet>
+    
+    <!-- ========================================================== -->
+    
+    <changeSet author="liquibase" id="metadata-modified-columns">
+        <modifyDataType columnName="changedate" newDataType="VARCHAR(30)" tableName="metadata"/>
+        <modifyDataType columnName="createdate" newDataType="VARCHAR(30)" tableName="metadata"/>
+    </changeSet>
+    
+    <!-- ========================================================== -->
+    
+    <changeSet author="liquibase" id="settings-modified-columns">
+        <modifyDataType columnName="name" newDataType="VARCHAR(64)" tableName="settings"/>
+    </changeSet>
+    
+    <!-- ========================================================== -->
+    <!-- Indexes/constraints -->
+    <!-- ========================================================== -->
+    
+    <changeSet author="liquibase" id="metadatanotifications_pkey">
+        <addPrimaryKey columnNames="metadataid, notifierid" constraintName="metadatanotifications_pkey" tableName="metadatanotifications"/>
+    </changeSet>
+    
+    <!-- ========================================================== -->
+    
+    <changeSet author="liquibase" id="validation_pkey">
+        <addPrimaryKey columnNames="metadataid, valtype" constraintName="validation_pkey" tableName="validation"/>
+    </changeSet>
+    
+    <!-- ========================================================== -->
+    
+    <changeSet author="liquibase" id="cswservercapabilitiesinfo_langid_fkey">
+        <addForeignKeyConstraint baseColumnNames="langid" baseTableName="cswservercapabilitiesinfo" baseTableSchemaName="public" constraintName="cswservercapabilitiesinfo_langid_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="languages" referencedTableSchemaName="public" referencesUniqueColumn="false"/>
+    </changeSet>
+    
+    <!-- ========================================================== -->
+    
+    <changeSet author="liquibase" id="metadatanotifications_notifierid_fkey">
+        <addForeignKeyConstraint baseColumnNames="notifierid" baseTableName="metadatanotifications" baseTableSchemaName="public" constraintName="metadatanotifications_notifierid_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="metadatanotifiers" referencedTableSchemaName="public" referencesUniqueColumn="false"/>
+    </changeSet>
+    
+    <!-- ========================================================== -->
+    
+    <changeSet author="liquibase" id="params_requestid_fkey">
+        <addForeignKeyConstraint baseColumnNames="requestid" baseTableName="params" baseTableSchemaName="public" constraintName="params_requestid_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="requests" referencedTableSchemaName="public" referencesUniqueColumn="false"/>
+    </changeSet>
+    
+    <!-- ========================================================== -->
+    
+    <changeSet author="liquibase" id="validation_metadataid_fkey">
+        <addForeignKeyConstraint baseColumnNames="metadataid" baseTableName="validation" baseTableSchemaName="public" constraintName="validation_metadataid_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="metadata" referencedTableSchemaName="public" referencesUniqueColumn="false"/>
+    </changeSet>
+    
+    <!-- ========================================================== -->
+    
+    <changeSet author="liquibase" id="harvesthistoryndx1">
+        <createIndex indexName="harvesthistoryndx1" tableName="harvesthistory" unique="false">
+            <column name="harvestdate"/>
+        </createIndex>
+    </changeSet>
+    
+    <!-- ========================================================== -->
+    
+    <changeSet author="liquibase" id="paramsndx2">
+        <createIndex indexName="paramsndx2" tableName="params" unique="false">
+            <column name="querytype"/>
+        </createIndex>
+    </changeSet>
+    
+    <!-- ========================================================== -->
+    
+    <changeSet author="liquibase" id="paramsndx3">
+        <createIndex indexName="paramsndx3" tableName="params" unique="false">
+            <column name="termfield"/>
+        </createIndex>
+    </changeSet>
+    
+    <!-- ========================================================== -->
+    
+    <changeSet author="liquibase" id="paramsndx4">
+        <createIndex indexName="paramsndx4" tableName="params" unique="false">
+            <column name="termtext"/>
+        </createIndex>
+    </changeSet>
+    
+    <!-- ========================================================== -->
+    
+    <changeSet author="liquibase" id="requestsndx1">
+        <createIndex indexName="requestsndx1" tableName="requests" unique="false">
+            <column name="requestdate"/>
+        </createIndex>
+    </changeSet>
+    
+    <!-- ========================================================== -->
+    
+    <changeSet author="liquibase" id="requestsndx2">
+        <createIndex indexName="requestsndx2" tableName="requests" unique="false">
+            <column name="ip"/>
+        </createIndex>
+    </changeSet>
+    
+    <!-- ========================================================== -->
+    
+    <changeSet author="liquibase" id="requestsndx3">
+        <createIndex indexName="requestsndx3" tableName="requests" unique="false">
+            <column name="hits"/>
+        </createIndex>
+    </changeSet>
+    
+    <!-- ========================================================== -->
+    
+    <changeSet author="liquibase" id="requestsndx4">
+        <createIndex indexName="requestsndx4" tableName="requests" unique="false">
+            <column name="lang"/>
+        </createIndex>
+    </changeSet>
+ 
+    <!-- ========================================================== -->
+    <!-- Data changes -->
+    <!-- ========================================================== -->
+    
+    <changeSet author="craigj" id="categories-data">
+        <preConditions >
+            <sqlCheck expectedResult="0">select count(*) from categories where name='registers'</sqlCheck>
+        </preConditions>
+        <sql>
+            insert into categories (id, name) select max(id)+1, 'registers' from categories;
+        </sql>
+    </changeSet>
+    
+    <changeSet author="craigj" id="categoriesdes-data">
+        <sql>
+            update categoriesdes set label='Aplicaciones' where langid='es' and iddes=(select id from categories where name='applications');
+            update categoriesdes set label='FotografÃ­as' where langid='es' and iddes=(select id from categories where name='photo');
+            update categoriesdes set label='Etude de cas, meilleures pratiques' where langid='fr' and iddes=(select id from categories where name='caseStudies');
+            insert into categoriesdes (iddes, langid, label) select id, 'ar','Maps &amp; graphics' from categories where name='maps';
+            insert into categoriesdes (iddes, langid, label) select id, 'ar','Datasets' from categories where name='datasets';
+            insert into categoriesdes (iddes, langid, label) select id, 'ar','Interactive resources' from categories where name='interactiveResources';
+            insert into categoriesdes (iddes, langid, label) select id, 'ar','Applications' from categories where name='applications';
+            insert into categoriesdes (iddes, langid, label) select id, 'ar','Case studies, best practices' from categories where name='caseStudies';
+            insert into categoriesdes (iddes, langid, label) select id, 'ar','Conference proceedings' from categories where name='proceedings';
+            insert into categoriesdes (iddes, langid, label) select id, 'ar','Photo' from categories where name='photo';
+            insert into categoriesdes (iddes, langid, label) select id, 'ar','Audio/Video' from categories where name='audioVideo';
+            insert into categoriesdes (iddes, langid, label) select id, 'ar','Directories' from categories where name='directories';
+            insert into categoriesdes (iddes, langid, label) select id, 'ar','Other information resources' from categories where name='otherResources';
+            insert into categoriesdes (iddes, langid, label) select id, 'ar','Z3950 Servers' from categories where name='z3950Servers';
+            insert into categoriesdes (iddes, langid, label) select id, 'ar','Registers' from categories where name='registers';
+            insert into categoriesdes (iddes, langid, label) select id, 'cn','Z3950 Servers' from categories where name='z3950Servers';
+            insert into categoriesdes (iddes, langid, label) select id, 'cn','Registers' from categories where name='registers';
+            insert into categoriesdes (iddes, langid, label) select id, 'de','Karten &amp; Grafiken' from categories where name='maps';
+            insert into categoriesdes (iddes, langid, label) select id, 'de','Datensets' from categories where name='datasets';
+            insert into categoriesdes (iddes, langid, label) select id, 'de','Interaktive Resourcen' from categories where name='interactiveResources';
+            insert into categoriesdes (iddes, langid, label) select id, 'de','Applikationen' from categories where name='applications';
+            insert into categoriesdes (iddes, langid, label) select id, 'de','Fallstudien' from categories where name='caseStudies';
+            insert into categoriesdes (iddes, langid, label) select id, 'de','Konferenz Ergebnisse' from categories where name='proceedings';
+            insert into categoriesdes (iddes, langid, label) select id, 'de','Photo' from categories where name='photo';
+            insert into categoriesdes (iddes, langid, label) select id, 'de','Audio/Video' from categories where name='audioVideo';
+            insert into categoriesdes (iddes, langid, label) select id, 'de','Verzeichnisse' from categories where name='directories';
+            insert into categoriesdes (iddes, langid, label) select id, 'de','Andere Resourcen' from categories where name='otherResources';
+            insert into categoriesdes (iddes, langid, label) select id, 'de','Z3950 Servers' from categories where name='z3950Servers';
+            insert into categoriesdes (iddes, langid, label) select id, 'de','Registers' from categories where name='registers';
+            insert into categoriesdes (iddes, langid, label) select id, 'en', 'Registers' from categories where name='registers';  
+            insert into categoriesdes (iddes, langid, label) select id, 'es','Z3950 Servers' from categories where name='z3950Servers';
+            insert into categoriesdes (iddes, langid, label) select id, 'es','Registers' from categories where name='registers';
+            insert into categoriesdes (iddes, langid, label) select id, 'fr','Serveurs Z3950' from categories where name='z3950Servers';
+            insert into categoriesdes (iddes, langid, label) select id, 'fr','Annuaires' from categories where name='registers';
+            insert into categoriesdes (iddes, langid, label) select id, 'nl','Kaarten &amp; afbeeldingen' from categories where name='maps';
+            insert into categoriesdes (iddes, langid, label) select id, 'nl','Datasets' from categories where name='datasets';
+            insert into categoriesdes (iddes, langid, label) select id, 'nl','Interactieve kaarten' from categories where name='interactiveResources';
+            insert into categoriesdes (iddes, langid, label) select id, 'nl','Toepassingen' from categories where name='applications';
+            insert into categoriesdes (iddes, langid, label) select id, 'nl','Case studies, best practices' from categories where name='caseStudies';
+            insert into categoriesdes (iddes, langid, label) select id, 'nl','Conferentie handelingen' from categories where name='proceedings';
+            insert into categoriesdes (iddes, langid, label) select id, 'nl','Fotos' from categories where name='photo';
+            insert into categoriesdes (iddes, langid, label) select id, 'nl','Audio/Video' from categories where name='audioVideo';
+            insert into categoriesdes (iddes, langid, label) select id, 'nl','Catalogi' from categories where name='directories';
+            insert into categoriesdes (iddes, langid, label) select id, 'nl','Andere informatie bronnen' from categories where name='otherResources';
+            insert into categoriesdes (iddes, langid, label) select id, 'nl','Z3950 Servers' from categories where name='z3950Servers';
+            insert into categoriesdes (iddes, langid, label) select id, 'nl','Registers' from categories where name='registers';
+            insert into categoriesdes (iddes, langid, label) select id, 'no','Kart og grafikk' from categories where name='maps';
+            insert into categoriesdes (iddes, langid, label) select id, 'no','Datasett' from categories where name='datasets';
+            insert into categoriesdes (iddes, langid, label) select id, 'no','Interakive ressurser' from categories where name='interactiveResources';
+            insert into categoriesdes (iddes, langid, label) select id, 'no','Applikasjoner' from categories where name='applications';
+            insert into categoriesdes (iddes, langid, label) select id, 'no','Studier og anbefalinger' from categories where name='caseStudies';
+            insert into categoriesdes (iddes, langid, label) select id, 'no','Konferanseresultater' from categories where name='proceedings';
+            insert into categoriesdes (iddes, langid, label) select id, 'no','Fotografier' from categories where name='photo';
+            insert into categoriesdes (iddes, langid, label) select id, 'no','Audio/Video' from categories where name='audioVideo';
+            insert into categoriesdes (iddes, langid, label) select id, 'no','Kataloger' from categories where name='directories';
+            insert into categoriesdes (iddes, langid, label) select id, 'no','Andre ressurser' from categories where name='otherResources';
+            insert into categoriesdes (iddes, langid, label) select id, 'no','Z3950 Servers' from categories where name='z3950Servers';
+            insert into categoriesdes (iddes, langid, label) select id, 'no','Registers' from categories where name='registers';
+            insert into categoriesdes (iddes, langid, label) select id, 'pt','Mapas &amp; Graficos' from categories where name='maps';
+            insert into categoriesdes (iddes, langid, label) select id, 'pt','Datasets' from categories where name='datasets';
+            insert into categoriesdes (iddes, langid, label) select id, 'pt','Fontes Interactivas' from categories where name='interactiveResources';
+            insert into categoriesdes (iddes, langid, label) select id, 'pt','Aplicações' from categories where name='applications';
+            insert into categoriesdes (iddes, langid, label) select id, 'pt','Estudos de Caso, Boas Praticas' from categories where name='caseStudies';
+            insert into categoriesdes (iddes, langid, label) select id, 'pt','Procedimentos de Validação' from categories where name='proceedings';
+            insert into categoriesdes (iddes, langid, label) select id, 'pt','Foto' from categories where name='photo';
+            insert into categoriesdes (iddes, langid, label) select id, 'pt','Audio/Video' from categories where name='audioVideo';
+            insert into categoriesdes (iddes, langid, label) select id, 'pt','Directorios' from categories where name='directories';
+            insert into categoriesdes (iddes, langid, label) select id, 'pt','Outra Informação sobre Fontes' from categories where name='otherResources';
+            insert into categoriesdes (iddes, langid, label) select id, 'pt','Z3950 Servers' from categories where name='z3950Servers';
+            insert into categoriesdes (iddes, langid, label) select id, 'pt','Registers' from categories where name='registers';
+            insert into categoriesdes (iddes, langid, label) select id, 'ru','Карты и графика' from categories where name='maps';
+            insert into categoriesdes (iddes, langid, label) select id, 'ru','Наборы данных' from categories where name='datasets';
+            insert into categoriesdes (iddes, langid, label) select id, 'ru','Интерактивные ресурсы' from categories where name='interactiveResources';
+            insert into categoriesdes (iddes, langid, label) select id, 'ru','Компьютерные программы' from categories where name='applications';
+            insert into categoriesdes (iddes, langid, label) select id, 'ru','Практические ситуации' from categories where name='caseStudies';
+            insert into categoriesdes (iddes, langid, label) select id, 'ru','Материалы конференций' from categories where name='proceedings';
+            insert into categoriesdes (iddes, langid, label) select id, 'ru','Фотографии' from categories where name='photo';
+            insert into categoriesdes (iddes, langid, label) select id, 'ru','Аудио/Видео' from categories where name='audioVideo';
+            insert into categoriesdes (iddes, langid, label) select id, 'ru','Каталоги/справочники' from categories where name='directories';
+            insert into categoriesdes (iddes, langid, label) select id, 'ru','Другие ресурсы' from categories where name='otherResources';
+            insert into categoriesdes (iddes, langid, label) select id, 'ru','Z3950 Servers' from categories where name='z3950Servers';
+            insert into categoriesdes (iddes, langid, label) select id, 'ru','Registers' from categories where name='registers';
+        </sql>
+    </changeSet>
+    
+    <!-- Update iso language descriptions -->
+    
+    <changeSet author="craigj" id="update-iso-lang-descriptions">
+        <loadData tableName="isolanguagesdes" file="data/isolanguagesdes.csv">
+            <column name="iddes" type="NUMERIC"/>
+        </loadData>    
+    </changeSet>
+    
+    <!-- Populate new cswservercapabilitiesinfo table with default data -->
+    
+    <changeSet author="craigj" id="load-csw-capabilities-info">
+        <loadData tableName="cswservercapabilitiesinfo" file="data/cswservercapabilitiesinfo.csv">
+            <column name="idfield" type="NUMERIC"/>
+        </loadData>    
+    </changeSet>
+    
+    <!-- Update existing system group descriptions -->
+    
+    <changeSet author="craigj" id="update-system-group-descs">
+        <update tableName="groupsdes">
+            <column name="label" value="Guest"/>
+            <where>iddes=-1 and langid='cn'</where>
+        </update>
+        <update tableName="groupsdes">
+            <column name="label" value="Guest"/>
+            <where>iddes=-1 and langid='en'</where>
+        </update>
+        <update tableName="groupsdes">
+            <column name="label" value="Guest"/>
+            <where>iddes=-1 and langid='es'</where>
+        </update>
+        <update tableName="groupsdes">
+            <column name="label" value="Todos"/>
+            <where>iddes=1 and langid='es'</where>
+        </update>
+        <update tableName="groupsdes">
+            <column name="label" value="Grupo de ejemplo"/>
+            <where>iddes=2 and langid='es'</where>
+        </update>
+        <update tableName="groupsdes">
+            <column name="label" value="InvitÃ©"/>
+            <where>iddes=-1 and langid='fr'</where>
+        </update>
+        <update tableName="groupsdes">
+            <column name="label" value="Groupe exemple"/>
+            <where>iddes=2 and langid='fr'</where>
+        </update>
+        <loadData tableName="groupsdes" file="data/groupsdes.csv">
+            <column name="iddes" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    
+    <!-- Update operation description entries -->
+    
+    <changeSet author="craigj" id="update-operation-descriptions">
+        <update tableName="operationsdes">
+            <column name="label" value="Publicar"/>
+            <where>iddes=0 and langid='es'</where>
+        </update>
+        <update tableName="operationsdes">
+            <column name="label" value="Descargar"/>
+            <where>iddes=1 and langid='es'</where>
+        </update>
+        <update tableName="operationsdes">
+            <column name="label" value="Editar"/>
+            <where>iddes=2 and langid='es'</where>
+        </update>
+        <update tableName="operationsdes">
+            <column name="label" value="Notificar"/>
+            <where>iddes=3 and langid='es'</where>
+        </update>
+        <update tableName="operationsdes">
+            <column name="label" value="Mapa interactivo"/>
+            <where>iddes=5 and langid='es'</where>
+        </update>
+        <update tableName="operationsdes">
+            <column name="label" value="Publier"/>
+            <where>iddes=0 and langid='fr'</where>
+        </update>
+        <update tableName="operationsdes">
+            <column name="label" value="Editer"/>
+            <where>iddes=2 and langid='fr'</where>
+        </update>
+        <update tableName="operationsdes">
+            <column name="label" value="Carte interactive"/>
+            <where>iddes=5 and langid='fr'</where>
+        </update>
+        <loadData tableName="operationsdes" file="data/operationsdes.csv">
+            <column name="iddes" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    
+    <!-- Update regions entries -->
+    
+    <changeSet author="craigj" id="update-region-entries">
+        <loadData tableName="regions" file="data/regions.csv">
+            <column name="id" type="NUMERIC"/>
+            <column name="north" type="NUMERIC"/>
+            <column name="south" type="NUMERIC"/>
+            <column name="west" type="NUMERIC"/>
+            <column name="east" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    
+    <!-- Update region description entries -->
+    
+    <changeSet author="craigj" id="update-region-descriptions">
+        <loadData tableName="regionsdes" file="data/regionsdes.csv">
+            <column name="iddes" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+
+    
+    <!-- Cleanup settings to make them fit geonetwork 2.7 upgrade model -->
+    
+    <!-- Harvesting nodes are normally added after the last setting in an instance -->
+    <!-- this creates a problem when the id's used are later used by new geonetwork settings in the default install -->
+    <!-- At IMOS custom scripts were used in the past to add new settings but these means settings are no longer in the usual -->
+    <!-- geonetwork locations.  Fix all this up by moving all settings out of normal range and then moving geonetwork settings back to their normal locations-->
+    <!-- leaving harvesting node settings out of this range.  Do in one transaction so if any errors occur nothing happens! -->
+    
+    <changeSet author="craigj" id="cleanup-settings">
+
+        <!-- drop constraints -->
+        
+        <dropForeignKeyConstraint constraintName="settings_parentid_fkey" baseTableName="settings"/>
+        
+        <!-- move all settings out of default settings range -->
+        
+        <update tableName="settings">
+            <column name="id" valueComputed="${USER_SETTINGS_START}+id"/>
+            <column name="parentid" valueComputed="${USER_SETTINGS_START}+parentid"/>
+        </update>
+        
+        <!-- change system settings to expected locations -->
+
+        <sql>
+            update settings set parentid=0 where parentid = (select id from settings where parentid is null);
+            update settings set id=0 where parentid is null;
+            
+            update settings set parentid=1 where parentid = (select id from settings where parentid=0 and name='system');
+            update settings set id=1 where parentid=0 and name='system';
+            
+            update settings set parentid=2 where parentid = (select id from settings where parentid=0 and name='harvesting');
+            update settings set id=2 where parentid=0 and name='harvesting';
+            
+            update settings set parentid=3 where parentid = (select id from settings where parentid=0 and name='logos');
+            update settings set id=3 where parentid=0 and name='logos';
+            
+            update settings set parentid=10 where parentid = (select id from settings where parentid=1 and name='site');
+            update settings set id=10 where parentid=1 and name='site';
+            
+            update settings set parentid=10 where parentid = (select id from settings where parentid=1 and name='site');
+            update settings set id=10 where parentid=1 and name='site';
+            
+            update settings set id=11 where parentid=10 and name='name';
+            update settings set id=12 where parentid=10 and name='siteId';
+            update settings set id=13 where parentid=10 and name='organization';
+            
+            update settings set parentid=14 where parentid = (select id from settings where parentid=1 and name='platform');
+            update settings set id=14 where parentid=1 and name='platform';
+            
+            update settings set id=15 where parentid=14 and name='version';
+            update settings set id=16 where parentid=14 and name='subVersion';
+            
+            update settings set parentid=20 where parentid = (select id from settings where parentid=1 and name='server');
+            update settings set id=20 where parentid=1 and name='server';
+            
+            update settings set id=21 where parentid=20 and name='host';
+            update settings set id=22 where parentid=20 and name='port';
+            
+            update settings set parentid=30 where parentid = (select id from settings where parentid=1 and name='intranet');
+            update settings set id=30 where parentid=1 and name='intranet';
+            
+            update settings set id=31 where parentid=30 and name='network';
+            update settings set id=32 where parentid=30 and name='netmask';
+            
+            update settings set parentid=40 where parentid = (select id from settings where parentid=1 and name='z3950');
+            update settings set id=40 where parentid=1 and name='z3950';
+            
+            update settings set id=41 where parentid=40 and name='enable';
+            update settings set id=42 where parentid=40 and name='port';
+            update settings set id=43 where parentid=40 and name='repositoryName';
+            
+            update settings set parentid=45 where parentid = (select id from settings where parentid=1 and name='couchdb');
+            update settings set id=45 where parentid=1 and name='couchdb';
+            
+            update settings set id=46 where parentid=45 and name='enable';
+            update settings set id=47 where parentid=45 and name='url';
+            
+            update settings set parentid=50 where parentid = (select id from settings where parentid=1 and name='proxy');
+            update settings set id=50 where parentid=1 and name='proxy';
+            
+            update settings set id=51 where parentid=50 and name='use';
+            update settings set id=52 where parentid=50 and name='host';
+            update settings set id=53 where parentid=50 and name='port';
+            update settings set id=54 where parentid=50 and name='username';
+            update settings set id=55 where parentid=50 and name='password';
+            
+            update settings set parentid=60 where parentid = (select id from settings where parentid=1 and name='feedback');
+            update settings set id=60 where parentid=1 and name='feedback';
+            
+            update settings set id=61 where parentid=60 and name='email';
+            
+            update settings set parentid=62 where parentid = (select id from settings where parentid=60 and name='mailServer');
+            update settings set id=62 where parentid=60 and name='mailServer';
+            
+            update settings set id=63 where parentid=62 and name='host';
+            update settings set id=64 where parentid=62 and name='port';
+            
+            update settings set parentid=70 where parentid = (select id from settings where parentid=1 and name='removedMetadata');
+            update settings set id=70 where parentid=1 and name='removedMetadata';
+            
+            update settings set id=71 where parentid=70 and name='dir';
+            
+            update settings set parentid=80 where parentid = (select id from settings where parentid=1 and name='ldap');
+            update settings set id=80 where parentid=1 and name='ldap';
+            
+            update settings set id=81 where parentid=80 and name='use';
+            update settings set id=82 where parentid=80 and name='host';
+            update settings set id=83 where parentid=80 and name='port';
+            update settings set id=84 where parentid=80 and name='defaultProfile';
+            
+            update settings set parentid=86 where parentid = (select id from settings where parentid=80 and name='distinguishedNames');
+            update settings set id=86 where parentid=80 and name='distinguishedNames';
+            
+            update settings set parentid=87 where parentid = (select id from settings where parentid=80 and name='userAttribs');
+            update settings set id=87 where parentid=80 and name='userAttribs';
+            
+            update settings set parentid=90 where parentid = (select id from settings where parentid=1 and name='selectionmanager');
+            update settings set id=90 where parentid=1 and name='selectionmanager';
+            
+            update settings set id=91 where parentid=90 and name='maxrecords';
+            
+            update settings set id=100 where parentid=86 and name='base';
+            update settings set id=101 where parentid=86 and name='users';
+            
+            update settings set id=110 where parentid=87 and name='name';
+            update settings set id=112 where parentid=87 and name='profile';
+            
+            update settings set parentid=120 where parentid = (select id from settings where parentid=1 and name='csw');
+            update settings set id=120 where parentid=1 and name='csw';
+            
+            update settings set id=121 where parentid=120 and name='enable';
+            update settings set id=122 where parentid=120 and name='contactId';
+            update settings set id=123 where parentid=120 and name='individualName';
+            update settings set id=124 where parentid=120 and name='positionName';
+            
+            update settings set parentid=125 where parentid = (select id from settings where parentid=120 and name='contactInfo');
+            update settings set id=125 where parentid=120 and name='contactInfo';
+            
+            update settings set id=126 where parentid=120 and name='role';
+            update settings set id=127 where parentid=120 and name='title';
+            update settings set id=128 where parentid=120 and name='abstract';
+            update settings set id=129 where parentid=120 and name='fees';
+            update settings set id=130 where parentid=120 and name='accessConstraints';
+            update settings set id=131 where parentid=120 and name='metadataPublic';
+            
+            update settings set parentid=160 where parentid = (select id from settings where parentid=125 and name='phone');
+            
+            update settings set id=140 where parentid=160 and name='voice';
+            update settings set id=141 where parentid=160 and name='facsimile';
+            
+            update settings set parentid=161 where parentid = (select id from settings where parentid=125 and name='address');
+            
+            update settings set id=150 where parentid=161 and name='deliveryPoint';
+            update settings set id=151 where parentid=161 and name='city';
+            update settings set id=152 where parentid=161 and name='administrativeArea';
+            update settings set id=153 where parentid=161 and name='postalCode';
+            update settings set id=154 where parentid=161 and name='country';
+            update settings set id=155 where parentid=161 and name='email';
+            
+            update settings set id=160 where parentid=125 and name='phone';
+            
+            update settings set id=161 where parentid=125 and name='address';
+            
+            update settings set parentid=162 where parentid = (select id from settings where parentid=125 and name='hoursOfService');
+            update settings set id=162 where parentid=125 and name='hoursOfService';
+            
+            update settings set parentid=163 where parentid = (select id from settings where parentid=125 and name='contactInstructions');
+            update settings set id=163 where parentid=125 and name='contactInstructions';
+            
+            update settings set parentid=170 where parentid = (select id from settings where parentid=1 and name='shib');
+            update settings set id=170 where parentid=1 and name='shib';
+            
+            update settings set id=171 where parentid=170 and name='use';
+            update settings set id=172 where parentid=170 and name='path';
+            
+            update settings set parentid=173 where parentid = (select id from settings where parentid=170 and name='attrib');
+            update settings set id=173 where parentid=170 and name='attrib';
+            
+            update settings set id=174 where parentid=173 and name='username';
+            update settings set id=175 where parentid=173 and name='surname';
+            update settings set id=176 where parentid=173 and name='firstname';
+            update settings set id=177 where parentid=173 and name='profile';
+            
+            update settings set parentid=190 where parentid = (select id from settings where parentid=1 and name='userSelfRegistration');
+            update settings set id=190 where parentid=1 and name='userSelfRegistration';
+            
+            update settings set id=191 where parentid=190 and name='enable';
+            
+            update settings set parentid=200 where parentid = (select id from settings where parentid=1 and name='xlinkResolver');
+            update settings set id=200 where parentid=1 and name='xlinkResolver';
+            
+            update settings set id=201 where parentid=200 and name='enable';
+            
+            update settings set parentid=600 where parentid = (select id from settings where parentid=1 and name='indexoptimizer');
+            update settings set id=600 where parentid=1 and name='indexoptimizer';
+            
+            update settings set id=601 where parentid=600 and name='enable';
+            
+            update settings set parentid=602 where parentid = (select id from settings where parentid=600 and name='at');
+            update settings set id=602 where parentid=600 and name='at';
+            
+            update settings set id=603 where parentid=602 and name='hour';
+            update settings set id=604 where parentid=602 and name='min';
+            update settings set id=605 where parentid=602 and name='sec';
+            
+            update settings set parentid=606 where parentid = (select id from settings where parentid=600 and name='interval');
+            update settings set id=606 where parentid=600 and name='interval';
+            
+            update settings set id=607 where parentid=606 and name='day';
+            update settings set id=608 where parentid=606 and name='hour';
+            update settings set id=609 where parentid=606 and name='min';
+            
+            update settings set parentid=700 where parentid = (select id from settings where parentid=1 and name='oai');
+            update settings set id=700 where parentid=1 and name='oai';
+            
+            update settings set id=701 where parentid=700 and name='mdmode';
+            update settings set id=702 where parentid=700 and name='tokentimeout';
+            update settings set id=703 where parentid=700 and name='cachesize';
+        </sql>
+        
+        <!-- move settings to 2.7 locations-->
+        
+        <update tableName="settings">
+            <column name="id" value="230"/>
+            <column name="parentid" value="1"/>
+            <where>id=200 and name='xlinkResolver'</where>
+        </update>
+        <update tableName="settings">
+            <column name="id" value="231"/>
+            <column name="parentid" value="230"/>
+            <where>id=201 and name='enable'</where>
+        </update>
+        
+        <!-- re-add constraints -->
+        <addForeignKeyConstraint constraintName="settings_parentid_fkey" baseTableName="settings" baseColumnNames="parentid" referencedTableName="settings" referencedColumnNames="id"/>
+    </changeSet>
+    
+    <!-- add new 2.7 settings -->
+    
+    <changeSet author="craigj" id="new-settings">
+        <loadData tableName="settings" file="data/settings-2.7.csv">
+            <column name="id" type="NUMERIC"/>
+            <column name="parentid" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    
+    <!-- update version number -->
+    
+    <changeSet author="craigj" id="set-2.7-version-details">
+        <gnext:updateSetting path="system/platform/version" value="2.8.0"/> 
+        <gnext:updateSetting path="system/platform/subVersion" value="SNAPSHOT"/> 
+    </changeSet>
+    
+    <!-- revision 7296 - metadata fragments harvester renamed to wfs feature harvester -->
+    
+    <changeSet author="craigj" id="wfs-feature-harvester">
+        <update tableName="settings">
+            <column name="value" value="wfsfeatures"/>
+            <where>name='node' and value='metadatafragments'</where>
+        </update>
+    </changeSet>
+        
+    <!-- revision 8588 - metadata status -->
+    
+    <changeSet author="craigj" id="r8588postgres" dbms="postgresql">
+        <createTable tableName="statusvalues">
+            <column name="id" type="int4">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="statusvalues_pkey"/>
+            </column>
+            <column name="name" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="n" name="reserved" type="char(1)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    
+        <createTable tableName="statusvaluesdes">
+            <column name="iddes" type="int4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="langid" type="VARCHAR(5)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="label" type="VARCHAR(96)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    
+        <addPrimaryKey columnNames="iddes, langid" constraintName="statusvaluesdes_pkey" tableName="statusvaluesdes"/>
+    
+        <createTable tableName="metadatastatus">
+            <column name="metadataid" type="int4">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="0" name="statusid" type="int4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="userid" type="int4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="changedate" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="changemessage" type="VARCHAR(2048)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    
+        <addPrimaryKey columnNames="metadataid, statusid, userid, changedate" constraintName="metadatastatus_pkey" tableName="metadatastatus"/>
+    
+        <addForeignKeyConstraint baseColumnNames="metadataid" baseTableName="metadatastatus" baseTableSchemaName="public" constraintName="metadatastatus_metadataid_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="metadata" referencedTableSchemaName="public" referencesUniqueColumn="false"/>
+
+        <addForeignKeyConstraint baseColumnNames="statusid" baseTableName="metadatastatus" baseTableSchemaName="public" constraintName="metadatastatus_statusid_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="statusvalues" referencedTableSchemaName="public" referencesUniqueColumn="false"/>
+
+        <addForeignKeyConstraint baseColumnNames="userid" baseTableName="metadatastatus" baseTableSchemaName="public" constraintName="metadatastatus_userid_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users" referencedTableSchemaName="public" referencesUniqueColumn="false"/>
+
+        <createIndex indexName="metadatandx3" tableName="metadata" unique="false">
+            <column name="owner"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="craigj" id="r8588">
+        <modifyDataType columnName="username" newDataType="VARCHAR(256)" tableName="users"/>
+    </changeSet>
+    
+    <changeSet author="craigj" id="r8588Data">
+        <loadData tableName="statusvalues" file="data/statusvalues.csv">
+            <column name="id" type="NUMERIC"/>
+        </loadData>
+        <loadData tableName="statusvaluesdes" file="data/statusvaluesdes.csv">
+            <column name="iddes" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+
+    <!-- revision 8618 - metadata history-->
+    
+    <changeSet author="craigj" id="r8618">
+        <gnext:addSetting path="system/site" name="svnUuid" id="17"/>
+    </changeSet>
+    
+    <!-- revision 8651 - custom element set -->
+    
+    <changeSet author="craigj" id="r8651">
+        <createTable tableName="customelementset">
+            <column name="xpath" type="VARCHAR(1000)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    
+    <!-- revisions 8750, 8760, 8769, 8770, 8800, 8818, 8850, 8889 and 8891 - multilingual indexing and iso639-2 language codes -->
+    
+    <changeSet author="craigj" id="r8750-8891">
+        <validCheckSum>any</validCheckSum>
+        <gnext:addSetting path="system" name="metadataprivs" id="917"/>
+        <gnext:addSetting path="system/metadataprivs" name="usergrouponly" value="false" id="918"/>
+        <gnext:addSetting path="system" name="autodetect" id="950"/>
+        <gnext:addSetting path="system/autodetect" name="enable" value="true" id="951"/>
+        <gnext:addSetting path="system" name="requestedLanguage" id="952"/>
+        <gnext:addSetting path="system/requestedLanguage" name="only" value="false" id="953"/>
+        <gnext:addSetting path="system/requestedLanguage" name="sorted" value="true" id="954"/>
+        <gnext:addSetting path="system/requestedLanguage" name="ignored" value="false" id="955"/>
+        
+        <gnext:removeAllSettings path="system/indexlanguages"/>
+        
+        <loadData tableName="languages" file="v270/r8750-8891/languages-migration.csv"/>
+
+        <update tableName="categoriesdes">
+            <column name="langid" value="ara"/>
+            <where>langid='ar'</where>
+        </update>
+        <update tableName="categoriesdes">
+            <column name="langid" value="cat"/>
+            <where>langid='ca'</where>
+        </update>
+        <update tableName="categoriesdes">
+            <column name="langid" value="chi"/>
+            <where>langid='cn'</where>
+        </update>
+        <update tableName="categoriesdes">
+            <column name="langid" value="dut"/>
+            <where>langid='nl'</where>
+        </update>
+        <update tableName="categoriesdes">
+            <column name="langid" value="eng"/>
+            <where>langid='en'</where>
+        </update>
+        <update tableName="categoriesdes">
+            <column name="langid" value="fin"/>
+            <where>langid='fi'</where>
+        </update>
+        <update tableName="categoriesdes">
+            <column name="langid" value="fre"/>
+            <where>langid='fr'</where>
+        </update>
+        <update tableName="categoriesdes">
+            <column name="langid" value="ger"/>
+            <where>langid='de'</where>
+        </update>
+        <update tableName="categoriesdes">
+            <column name="langid" value="nor"/>
+            <where>langid='no'</where>
+        </update>
+        <update tableName="categoriesdes">
+            <column name="langid" value="por"/>
+            <where>langid='pt'</where>
+        </update>
+        <update tableName="categoriesdes">
+            <column name="langid" value="rus"/>
+            <where>langid='ru'</where>
+        </update>
+        <update tableName="categoriesdes">
+            <column name="langid" value="spa"/>
+            <where>langid='es'</where>
+        </update>
+        <update tableName="categoriesdes">
+            <column name="langid" value="vie"/>
+            <where>langid='vi'</where>
+        </update>
+
+        <update tableName="isolanguagesdes">
+            <column name="langid" value="ara"/>
+            <where>langid='ar'</where>
+        </update>
+        <update tableName="isolanguagesdes">
+            <column name="langid" value="cat"/>
+            <where>langid='ca'</where>
+        </update>
+        <update tableName="isolanguagesdes">
+            <column name="langid" value="chi"/>
+            <where>langid='cn'</where>
+        </update>
+        <update tableName="isolanguagesdes">
+            <column name="langid" value="dut"/>
+            <where>langid='nl'</where>
+        </update>
+        <update tableName="isolanguagesdes">
+            <column name="langid" value="eng"/>
+            <where>langid='en'</where>
+        </update>
+        <update tableName="isolanguagesdes">
+            <column name="langid" value="fin"/>
+            <where>langid='fi'</where>
+        </update>
+        <update tableName="isolanguagesdes">
+            <column name="langid" value="fre"/>
+            <where>langid='fr'</where>
+        </update>
+        <update tableName="isolanguagesdes">
+            <column name="langid" value="ger"/>
+            <where>langid='de'</where>
+        </update>
+        <update tableName="isolanguagesdes">
+            <column name="langid" value="nor"/>
+            <where>langid='no'</where>
+        </update>
+        <update tableName="isolanguagesdes">
+            <column name="langid" value="por"/>
+            <where>langid='pt'</where>
+        </update>
+        <update tableName="isolanguagesdes">
+            <column name="langid" value="rus"/>
+            <where>langid='ru'</where>
+        </update>
+        <update tableName="isolanguagesdes">
+            <column name="langid" value="spa"/>
+            <where>langid='es'</where>
+        </update>
+        <update tableName="isolanguagesdes">
+            <column name="langid" value="vie"/>
+            <where>langid='vi'</where>
+        </update>
+
+        <update tableName="regionsdes">
+            <column name="langid" value="ara"/>
+            <where>langid='ar'</where>
+        </update>
+        <update tableName="regionsdes">
+            <column name="langid" value="cat"/>
+            <where>langid='ca'</where>
+        </update>
+        <update tableName="regionsdes">
+            <column name="langid" value="chi"/>
+            <where>langid='cn'</where>
+        </update>
+        <update tableName="regionsdes">
+            <column name="langid" value="dut"/>
+            <where>langid='nl'</where>
+        </update>
+        <update tableName="regionsdes">
+            <column name="langid" value="eng"/>
+            <where>langid='en'</where>
+        </update>
+        <update tableName="regionsdes">
+            <column name="langid" value="fin"/>
+            <where>langid='fi'</where>
+        </update>
+        <update tableName="regionsdes">
+            <column name="langid" value="fre"/>
+            <where>langid='fr'</where>
+        </update>
+        <update tableName="regionsdes">
+            <column name="langid" value="ger"/>
+            <where>langid='de'</where>
+        </update>
+        <update tableName="regionsdes">
+            <column name="langid" value="nor"/>
+            <where>langid='no'</where>
+        </update>
+        <update tableName="regionsdes">
+            <column name="langid" value="por"/>
+            <where>langid='pt'</where>
+        </update>
+        <update tableName="regionsdes">
+            <column name="langid" value="rus"/>
+            <where>langid='ru'</where>
+        </update>
+        <update tableName="regionsdes">
+            <column name="langid" value="spa"/>
+            <where>langid='es'</where>
+        </update>
+        <update tableName="regionsdes">
+            <column name="langid" value="vie"/>
+            <where>langid='vi'</where>
+        </update>
+
+        <update tableName="groupsdes">
+            <column name="langid" value="ara"/>
+            <where>langid='ar'</where>
+        </update>
+        <update tableName="groupsdes">
+            <column name="langid" value="cat"/>
+            <where>langid='ca'</where>
+        </update>
+        <update tableName="groupsdes">
+            <column name="langid" value="chi"/>
+            <where>langid='cn'</where>
+        </update>
+        <update tableName="groupsdes">
+            <column name="langid" value="dut"/>
+            <where>langid='nl'</where>
+        </update>
+        <update tableName="groupsdes">
+            <column name="langid" value="eng"/>
+            <where>langid='en'</where>
+        </update>
+        <update tableName="groupsdes">
+            <column name="langid" value="fin"/>
+            <where>langid='fi'</where>
+        </update>
+        <update tableName="groupsdes">
+            <column name="langid" value="fre"/>
+            <where>langid='fr'</where>
+        </update>
+        <update tableName="groupsdes">
+            <column name="langid" value="ger"/>
+            <where>langid='de'</where>
+        </update>
+        <update tableName="groupsdes">
+            <column name="langid" value="nor"/>
+            <where>langid='no'</where>
+        </update>
+        <update tableName="groupsdes">
+            <column name="langid" value="por"/>
+            <where>langid='pt'</where>
+        </update>
+        <update tableName="groupsdes">
+            <column name="langid" value="rus"/>
+            <where>langid='ru'</where>
+        </update>
+        <update tableName="groupsdes">
+            <column name="langid" value="spa"/>
+            <where>langid='es'</where>
+        </update>
+        <update tableName="groupsdes">
+            <column name="langid" value="vie"/>
+            <where>langid='vi'</where>
+        </update>
+
+        <update tableName="operationsdes">
+            <column name="langid" value="ara"/>
+            <where>langid='ar'</where>
+        </update>
+        <update tableName="operationsdes">
+            <column name="langid" value="cat"/>
+            <where>langid='ca'</where>
+        </update>
+        <update tableName="operationsdes">
+            <column name="langid" value="chi"/>
+            <where>langid='cn'</where>
+        </update>
+        <update tableName="operationsdes">
+            <column name="langid" value="dut"/>
+            <where>langid='nl'</where>
+        </update>
+        <update tableName="operationsdes">
+            <column name="langid" value="eng"/>
+            <where>langid='en'</where>
+        </update>
+        <update tableName="operationsdes">
+            <column name="langid" value="fin"/>
+            <where>langid='fi'</where>
+        </update>
+        <update tableName="operationsdes">
+            <column name="langid" value="fre"/>
+            <where>langid='fr'</where>
+        </update>
+        <update tableName="operationsdes">
+            <column name="langid" value="ger"/>
+            <where>langid='de'</where>
+        </update>
+        <update tableName="operationsdes">
+            <column name="langid" value="nor"/>
+            <where>langid='no'</where>
+        </update>
+        <update tableName="operationsdes">
+            <column name="langid" value="por"/>
+            <where>langid='pt'</where>
+        </update>
+        <update tableName="operationsdes">
+            <column name="langid" value="rus"/>
+            <where>langid='ru'</where>
+        </update>
+        <update tableName="operationsdes">
+            <column name="langid" value="spa"/>
+            <where>langid='es'</where>
+        </update>
+        <update tableName="operationsdes">
+            <column name="langid" value="vie"/>
+            <where>langid='vi'</where>
+        </update>
+
+        <update tableName="statusvaluesdes">
+            <column name="langid" value="ara"/>
+            <where>langid='ar'</where>
+        </update>
+        <update tableName="statusvaluesdes">
+            <column name="langid" value="cat"/>
+            <where>langid='ca'</where>
+        </update>
+        <update tableName="statusvaluesdes">
+            <column name="langid" value="chi"/>
+            <where>langid='cn'</where>
+        </update>
+        <update tableName="statusvaluesdes">
+            <column name="langid" value="dut"/>
+            <where>langid='nl'</where>
+        </update>
+        <update tableName="statusvaluesdes">
+            <column name="langid" value="eng"/>
+            <where>langid='en'</where>
+        </update>
+        <update tableName="statusvaluesdes">
+            <column name="langid" value="fin"/>
+            <where>langid='fi'</where>
+        </update>
+        <update tableName="statusvaluesdes">
+            <column name="langid" value="fre"/>
+            <where>langid='fr'</where>
+        </update>
+        <update tableName="statusvaluesdes">
+            <column name="langid" value="ger"/>
+            <where>langid='de'</where>
+        </update>
+        <update tableName="statusvaluesdes">
+            <column name="langid" value="nor"/>
+            <where>langid='no'</where>
+        </update>
+        <update tableName="statusvaluesdes">
+            <column name="langid" value="por"/>
+            <where>langid='pt'</where>
+        </update>
+        <update tableName="statusvaluesdes">
+            <column name="langid" value="rus"/>
+            <where>langid='ru'</where>
+        </update>
+        <update tableName="statusvaluesdes">
+            <column name="langid" value="spa"/>
+            <where>langid='es'</where>
+        </update>
+        <update tableName="statusvaluesdes">
+            <column name="langid" value="vie"/>
+            <where>langid='vi'</where>
+        </update>
+
+        <update tableName="cswservercapabilitiesinfo">
+            <column name="langid" value="ara"/>
+            <where>langid='ar'</where>
+        </update>
+        <update tableName="cswservercapabilitiesinfo">
+            <column name="langid" value="cat"/>
+            <where>langid='ca'</where>
+        </update>
+        <update tableName="cswservercapabilitiesinfo">
+            <column name="langid" value="chi"/>
+            <where>langid='cn'</where>
+        </update>
+        <update tableName="cswservercapabilitiesinfo">
+            <column name="langid" value="dut"/>
+            <where>langid='nl'</where>
+        </update>
+        <update tableName="cswservercapabilitiesinfo">
+            <column name="langid" value="eng"/>
+            <where>langid='en'</where>
+        </update>
+        <update tableName="cswservercapabilitiesinfo">
+            <column name="langid" value="fin"/>
+            <where>langid='fi'</where>
+        </update>
+        <update tableName="cswservercapabilitiesinfo">
+            <column name="langid" value="fre"/>
+            <where>langid='fr'</where>
+        </update>
+        <update tableName="cswservercapabilitiesinfo">
+            <column name="langid" value="ger"/>
+            <where>langid='de'</where>
+        </update>
+        <update tableName="cswservercapabilitiesinfo">
+            <column name="langid" value="nor"/>
+            <where>langid='no'</where>
+        </update>
+        <update tableName="cswservercapabilitiesinfo">
+            <column name="langid" value="por"/>
+            <where>langid='pt'</where>
+        </update>
+        <update tableName="cswservercapabilitiesinfo">
+            <column name="langid" value="rus"/>
+            <where>langid='ru'</where>
+        </update>
+        <update tableName="cswservercapabilitiesinfo">
+            <column name="langid" value="spa"/>
+            <where>langid='es'</where>
+        </update>
+        <update tableName="cswservercapabilitiesinfo">
+            <column name="langid" value="vie"/>
+            <where>langid='vi'</where>
+        </update>
+
+        <delete tableName="languages">
+            <where>id='ar'</where>
+        </delete>    
+        <delete tableName="languages">
+            <where>id='cn'</where>
+        </delete>    
+        <delete tableName="languages">
+            <where>id='de'</where>
+        </delete>    
+        <delete tableName="languages">
+            <where>id='en'</where>
+        </delete>    
+        <delete tableName="languages">
+            <where>id='es'</where>
+        </delete>    
+        <delete tableName="languages">
+            <where>id='fr'</where>
+        </delete>    
+        <delete tableName="languages">
+            <where>id='nl'</where>
+        </delete>    
+        <delete tableName="languages">
+            <where>id='no'</where>
+        </delete>    
+        <delete tableName="languages">
+            <where>id='pt'</where>
+        </delete>    
+        <delete tableName="languages">
+            <where>id='ru'</where>
+        </delete>    
+
+        <dropColumn tableName="languages" columnName="isocode"/>
+        
+        <addColumn tableName="isolanguages">
+            <column name="shortcode" type="VARCHAR(2)"/>
+        </addColumn>
+        
+        <update tableName="isolanguages">
+            <column name="shortcode" value="ar"/>
+            <where>code='ara'</where>
+        </update>    
+        <update tableName="isolanguages">
+            <column name="shortcode" value="ca"/>
+            <where>code='cat'</where>
+        </update>    
+        <update tableName="isolanguages">
+            <column name="shortcode" value="zh"/>
+            <where>code='chi'</where>
+        </update>    
+        <update tableName="isolanguages">
+            <column name="shortcode" value="nl"/>
+            <where>code='dut'</where>
+        </update>    
+        <update tableName="isolanguages">
+            <column name="shortcode" value="en"/>
+            <where>code='eng'</where>
+        </update>    
+        <update tableName="isolanguages">
+            <column name="shortcode" value="fi"/>
+            <where>code='fin'</where>
+        </update>    
+        <update tableName="isolanguages">
+            <column name="shortcode" value="fr"/>
+            <where>code='fre'</where>
+        </update>    
+        <update tableName="isolanguages">
+            <column name="shortcode" value="de"/>
+            <where>code='ger'</where>
+        </update>    
+        <update tableName="isolanguages">
+            <column name="shortcode" value="no"/>
+            <where>code='nor'</where>
+        </update>    
+        <update tableName="isolanguages">
+            <column name="shortcode" value="pt"/>
+            <where>code='por'</where>
+        </update>    
+        <update tableName="isolanguages">
+            <column name="shortcode" value="ru"/>
+            <where>code='rus'</where>
+        </update>    
+        <update tableName="isolanguages">
+            <column name="shortcode" value="es"/>
+            <where>code='spa'</where>
+        </update>    
+        <update tableName="isolanguages">
+            <column name="shortcode" value="vi"/>
+            <where>code='vie'</where>
+        </update>   
+        
+    </changeSet>
+        
+    <changeSet author="craigj" id="r9068">
+        <gnext:addSetting path="system/shib/attrib" name="organizationName" id="180"/>
+        <gnext:addSetting path="system/shib/attrib" name="postalAddress" id="181"/>
+        <gnext:addSetting path="system/shib/attrib" name="phone" id="182"/>
+        <gnext:addSetting path="system/shib/attrib" name="email" id="183"/>
+        <gnext:addSetting path="system/shib/attrib" name="fullName" id="184"/>
+    </changeSet>
+    
+    <changeSet author="craigj" id="r9088">
+        <sqlFile path="v270/r9088/italian-translations.sql"/>
+    </changeSet>
+    
+    <changeSet author="craigj" id="3a8f7bd0-ab1d-11e3-a5e2-0800200c9a66">
+        <modifyDataType columnName="the_geom" newDataType="geometry(MultiPolygon,4326)" tableName="spatialindex"/>
+        <sql>ALTER TABLE spatialindex DROP CONSTRAINT enforce_dims_the_geom;</sql>
+        <sql>ALTER TABLE spatialindex DROP CONSTRAINT enforce_geotype_the_geom;</sql>
+        <sql>ALTER TABLE spatialindex DROP CONSTRAINT enforce_srid_the_geom;</sql>
+    </changeSet>
+    
+</databaseChangeLog>
