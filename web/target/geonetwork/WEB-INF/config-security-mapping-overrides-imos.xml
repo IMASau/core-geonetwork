@@ -1,0 +1,7 @@
+<overrides xmlns:sec="http://www.springframework.org/schema/security">
+    <!-- all custom services need to be in added to the spring security config -->
+    <spring>
+        <!-- everyone -->
+        <addInterceptUrl bean="overridefilterSecurityInterceptor" pattern="/srv/[a-z]{2,3}/xml.search.summary!?.*" access="permitAll"/>
+    </spring>
+</overrides>
