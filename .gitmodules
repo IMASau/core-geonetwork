@@ -10,3 +10,7 @@
 [submodule "geoserver"]
 	path = geoserver
 	url = https://github.com/geonetwork/core-geoserver.git
+[submodule "schemaPlugins"]
+	path = schemaPlugins
+	url = git@github.com:aodn/schema-plugins
+	branch = anz_munge2
