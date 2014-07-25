@@ -550,6 +550,23 @@
                 <exclude>schematrons/**</exclude>
                 <exclude>iso19139.fra/**</exclude>
                 <!-- exclude>iso19139.mcp-2.0/**</exclude -->
+
+					
+                <exclude>anzmeta/**</exclude>
+                <exclude>csw-record/**</exclude>
+                <exclude>dublin-core/**</exclude>
+                <exclude>eml-gbif/**</exclude>
+                <exclude>fgdc-std/**</exclude>
+                <exclude>iso19110/**</exclude>
+                <exclude>iso19115/**</exclude>
+                <exclude>iso19115/**</exclude>
+                <exclude>iso19115-3/**</exclude>
+                <exclude>iso19139.anzlic/**</exclude>
+                <exclude>iso19139.mcp/**</exclude>
+                <exclude>iso19139.mcp-1.4/**</exclude>
+                <exclude>sensorML/**</exclude>
+
+
                 <exclude>iso19139.xyz/**</exclude>
                 <exclude>iso19139.geobru/**</exclude>
                 <exclude>iso19139.sdn-cdi/**</exclude>
