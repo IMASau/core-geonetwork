@@ -582,13 +582,13 @@
             </resource>
 
 						<!-- rif.xsl into iso19139/convert -->
-            <resource>
+            <!--resource>
               <directory>../schemaPlugins/iso19139.anzlic/convert</directory>
               <targetPath>WEB-INF/data/config/schema_plugins/iso19139/convert</targetPath>
               <includes>
                 <include>rif.xsl</include>
               </includes>
-            </resource>
+            </resource-->
           
 						<!-- harvesting icons -->
             <resource>
