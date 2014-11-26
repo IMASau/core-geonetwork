@@ -128,53 +128,16 @@ public class Format extends AbstractFormatService {
             return root;
         }
        
-
-		
- 
-        // verify xsl is a valid file before loading metadata and increasing
-        // popularity
         Xml.loadFile(viewXslFile);
-
-
-	//public static Element transform(Element xml, String styleSheetPath, Map<String,String> params) throws Exception
-
-	//	public static String getParam(Element el, String name) throws BadInputEx
-
-        // String xslid = Util.getParam(params, "xsl", null);
-	
-
-		//for ( Object param : params.getChildren(params))
 
 		Map<String, String> xslParams = new HashMap<String, String>();
 
-
 		List<Element> elements = params.getChildren();
         for(Element el : elements ) {
-
-				// el.getName()
-				// el.getTextTrim()
-
-			System.out.println( "HERE  " +  el.getName() + " " + el.getTextTrim() );
-
-			xslParams.put( el.getName(), el.getTextTrim() );
+			xslParams.put(el.getName(), el.getTextTrim());
         }   
 
-/*	
-		for ( Object param : params.getChildren())
-		{
-			Element resource = (Element) res;
-				String  enabled  = resource.getAttributeValue("enabled");
-
-				if ("true".equals(enabled))
-						return resource;
-		}
-
-		*/
-
         Element transformed = Xml.transform(root, viewXslFile.getAbsolutePath(), xslParams);
-
-
-//        Element transformed = Xml.transform(root, viewXslFile.getAbsolutePath());
 
         Element response = new Element("metadata");
         response.addContent(transformed);
