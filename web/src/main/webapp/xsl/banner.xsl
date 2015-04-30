@@ -31,8 +31,8 @@
                          alt="AODN Australian Ocean Data Network Logo" />
                 </td>
                 <td align="right" class="banner">
-                    <img src="{/root/gui/config/banner/headerRightImage}"
-                         alt="IMOS Integrated Marine Observation System logo" align="top" />
+                    <img src="http://data.imas.utas.edu.au/static/img/imas-utas-small.png"
+                         alt="IMAS/UTas logo" align="top" />
                 </td>
             </tr>
 
