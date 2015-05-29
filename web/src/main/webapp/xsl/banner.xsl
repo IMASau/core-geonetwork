@@ -27,12 +27,15 @@
             <!-- title -->
             <tr class="banner">
                 <td class="banner">
-                    <img src="{/root/gui/config/banner/headerLeftImage}"
-                         alt="AODN Australian Ocean Data Network Logo" />
-                </td>
-                <td align="right" class="banner">
                     <img src="http://data.imas.utas.edu.au/static/img/imas-utas-small.png"
                          alt="IMAS/UTas logo" align="top" />
+                    <img src="http://data.imas.utas.edu.au/static/img/header-text.png"
+                        alt="Open Access to Marine Data"
+                        class="banner-text" />
+                </td>
+                <td class="banner" align="right">
+                    <img src="{/root/gui/config/banner/headerLeftImage}"
+                         alt="AODN Australian Ocean Data Network Logo" />
                 </td>
             </tr>
 

@@ -109,6 +109,15 @@ td.banner {
 	color: #ffffff;
 	background-image: url('images/blue-background.gif');
 	border-bottom: 1px solid #ffffff; /* moved here from tr since IE accepts it only here */
+    white-space: nowrap;
+}
+
+.banner>.banner-text {
+    margin-left: 80px;
+}
+
+.banner>img {
+    display: inline-block;
 }
 
 .bottom_border {
