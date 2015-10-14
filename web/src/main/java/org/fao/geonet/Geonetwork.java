@@ -56,6 +56,7 @@ import jeeves.utils.Xml;
 import jeeves.utils.XmlResolver;
 import jeeves.xlink.Processor;
 
+import org.apache.log4j.Level;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.csw.common.Csw;
 import org.fao.geonet.kernel.AccessManager;
@@ -83,6 +84,7 @@ import org.fao.geonet.languages.LanguageDetector;
 import org.fao.geonet.lib.DatabaseType;
 import org.fao.geonet.lib.Lib;
 import org.fao.geonet.lib.ServerLib;
+import org.fao.geonet.monitor.link.LinkMonitorInterface;
 import org.fao.geonet.notifier.MetadataNotifierControl;
 import org.fao.geonet.notifier.MetadataNotifierManager;
 import org.fao.geonet.resources.Resources;
@@ -475,6 +477,9 @@ public class Geonetwork implements ApplicationHandler {
             Integer dbHeartBeatFixedDelay = Integer.parseInt(handlerConfig.getValue(Geonet.Config.DB_HEARTBEAT_FIXEDDELAYSECONDS, "60"));
             createDBHeartBeat(context.getResourceManager(), gnContext, dbHeartBeatInitialDelay, dbHeartBeatFixedDelay);
         }
+
+        createLinkMonitor(app_context, context.getResourceManager(), gnContext, handlerConfig);
+
 		return gnContext;
 	}
 
@@ -556,6 +561,31 @@ public class Geonetwork implements ApplicationHandler {
             }
         };
         scheduledExecutorService.scheduleWithFixedDelay(DBHeartBeat, initialDelay, fixedDelay, TimeUnit.SECONDS);
+    }
+
+    private void createLinkMonitor(final ApplicationContext appContext, final ResourceManager rm, final GeonetContext gc, ServiceConfig handlerConfig) {
+        boolean linkMonitorEnabled = Boolean.parseBoolean(handlerConfig.getValue(Geonet.Config.LINK_MONITOR_ENABLED, "false"));
+        if(!linkMonitorEnabled) {
+            return;
+        }
+
+        logger.info("Creating Link Monitor...");
+
+        Integer linkMonitorInitialDelay = Integer.parseInt(handlerConfig.getValue(Geonet.Config.LINK_MONITOR_INITIALDELAYSECONDS, "5"));
+        Integer linkMonitorFixedDelay = Integer.parseInt(handlerConfig.getValue(Geonet.Config.LINK_MONITOR_FIXEDDELAYSECONDS, "60"));
+
+        try {
+            gc.linkMonitor = appContext.getBean("LinkMonitor", LinkMonitorInterface.class);
+            gc.linkMonitor.init(appContext, rm, gc, handlerConfig);
+            logger.info(String.format("Link Monitor with class '%s' initialized", gc.linkMonitor.getClass().getName()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("Failed initializing Link Monitor");
+            return;
+        }
+
+        ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
+        scheduledExecutorService.scheduleWithFixedDelay(gc.getLinkMonitor(), linkMonitorInitialDelay, linkMonitorFixedDelay, TimeUnit.SECONDS);
     }
 
     /**
