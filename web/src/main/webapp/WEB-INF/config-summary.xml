@@ -68,12 +68,17 @@
 			<param name="thesaurusManager" type="org.fao.geonet.kernel.ThesaurusManager"/>
 			<param name="conceptScheme" type="java.lang.String" value="http://gcmdservices.gsfc.nasa.gov/kms/concepts/concept_scheme/sciencekeywords"/>
 		</dimension>
-		<dimension name="platformCategories" indexKey="platformUri" label="Platform" classifier="org.fao.geonet.kernel.search.classifier.ClassificationScheme">
+		<dimension name="orgUnitCategories" indexKey="orgUnit" label="Organisational unit" classifier="au.org.emii.classifier.LabelClassifier">
+			<param name="thesaurusFinder" type="org.fao.geonet.kernel.ThesaurusFinder"/>
+			<param name="vocabularyScheme" type="java.lang.String" value="http://vocab.aodn.org.au/def/organisation/1"/>
+			<param name="classificationScheme" type="java.lang.String" value="http://vocab.aodn.org.au/def/organisation_classes/1"/>
+		</dimension>
+		<dimension name="platformCategories" indexKey="platformUri" label="Platform" classifier="au.org.emii.classifier.UriClassifier">
 			<param name="thesaurusFinder" type="org.fao.geonet.kernel.ThesaurusFinder"/> 
 			<param name="vocabularyScheme" type="java.lang.String" value="http://vocab.aodn.org.au/PlatformClassificationScheme/SchemeNumber1"/>
 			<param name="classificationScheme" type="java.lang.String" value="http://vocab.aodn.org.au/PlatformClassificationScheme/SchemeNumber1"/>
 		</dimension>
-		<dimension name="parameterCategories" indexKey="parameterUri" label="Measured parameter" classifier="org.fao.geonet.kernel.search.classifier.ClassificationScheme">
+		<dimension name="parameterCategories" indexKey="parameterUri" label="Measured parameter" classifier="au.org.emii.classifier.UriClassifier">
 			<param name="thesaurusFinder" type="org.fao.geonet.kernel.ThesaurusFinder"/> 
 			<param name="vocabularyScheme" type="java.lang.String" value="http://vocab.aodn.org.au/ParameterClassificationScheme/SchemeNumber1"/>
 			<param name="classificationScheme" type="java.lang.String" value="http://vocab.aodn.org.au/ParameterClassificationScheme/SchemeNumber1"/>
@@ -119,9 +124,10 @@
 		</portal_summary>
 		<portal_hierarchical_summary>
 			<item dimension="gcmdKeywords" format="DIMENSION" max="100" depth="10" />
-			<item dimension="organisationCategories" format="DIMENSION" max="100" depth="10" />
-			<item dimension="parameterCategories" format="DIMENSION" max="100" depth="10" />
-			<item dimension="platformCategories" format="DIMENSION" max="100" depth="10" />
+			<item dimension="orgUnitCategories" format="DIMENSION" max="100" depth="10"/>
+			<item dimension="organisationCategories" format="DIMENSION" max="100" depth="10"/>
+			<item dimension="parameterCategories" format="DIMENSION" max="100" depth="10"/>
+			<item dimension="platformCategories" format="DIMENSION" max="100" depth="10"/>
 			<item dimension="temporalResolutionCategories" format="DIMENSION" max="100" depth="10" translator="codelist:mcp:MD_TemporalAggregationUnitCode"/>
 		</portal_hierarchical_summary>
 	</def>
