@@ -10,4 +10,5 @@
 	<!--
 	<schema prefix="rifcs" nsUrl="http://ands.org.au/standards/rif-cs/registryObjects" schemaLocation="http://services.ands.org.au/home/orca/schemata/registryObjects.xsd"/>
 	-->
+	<schema prefix="DIF" nsUrl="http://gcmd.gsfc.nasa.gov/Aboutus/xml/dif/" schemaLocation="https://gcmd.gsfc.nasa.gov/Aboutus/xml/dif/dif_v9.9.3.xsd"/>
 </schemas>
