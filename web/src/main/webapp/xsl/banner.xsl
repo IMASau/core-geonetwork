@@ -27,9 +27,9 @@
             <!-- title -->
             <tr class="banner">
                 <td class="banner">
-                    <img src="http://data.imas.utas.edu.au/static/img/imas-utas-small.png"
+                    <img src="https://data.imas.utas.edu.au/static/img/imas-utas-small.png"
                          alt="IMAS/UTas logo" align="top" />
-                    <img src="http://data.imas.utas.edu.au/static/img/header-text.png"
+                    <img src="https://data.imas.utas.edu.au/static/img/header-text.png"
                         alt="Open Access to Marine Data"
                         class="banner-text" />
                 </td>
